@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Leimarembi Foundation</string>
+    <string name="title_activity_main">Leimarembi Foundation</string>
+    <string name="package_name">org.leimarembifoundation.app</string>
+    <string name="custom_url_scheme">org.leimarembifoundation.app</string>
+</resources>

@@ -1,0 +1,49 @@
+# Dependencies
+node_modules/
+
+# Expo & Bundles
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# Android build caches
+.gradle/
+build/
+**/build/
+**/.cxx/
+**/captures/
+*.apk
+*.aab
+local.properties
+.idea/
+*.iml
+
+# iOS build caches
+Pods/
+DerivedData/
+*.xcworkspace/xcuserdata
+*.xcuserdatad
+
+# Certificates & Keys
+*.jks
+*.keystore
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.pem
+
+# Metro & Debug logs
+.metro-health-check*
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env*.local
+.env
