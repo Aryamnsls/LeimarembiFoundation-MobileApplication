@@ -1,17 +1,39 @@
 # Leimarembi Foundation - Official Mobile Application
-**Cross-Platform Android & iOS Mobile Suite for Leimarembi Foundation**
+**Bespoke Cross-Platform Native Mobile Suite for Android & iOS**
 
-This repository contains the official mobile application codebase for **Leimarembi Foundation**, providing an exact, seamless clone of the production website and digital governance suite.
+This repository contains the dedicated, mobile-optimized application codebase for **Leimarembi Foundation** (Govt. Registered Public Charitable Trust | NITI Aayog NGO Darpan: `AS/2023/034291` | 80G & 12A Certified).
+
+Unlike a desktop website or simple WebView wrapper, this mobile application features a **bespoke, luxury dark-theme mobile UI (`#070A13`) tailored specifically to smartphone aspect ratios (19.5:9 / 20:9)**, with native bottom tab navigation, tactile card ergonomics, fast offline resilience, and direct device API integrations for both **Android** and **iOS**.
 
 ---
 
-## 📱 Features
+## 📱 Mobile-First Features & Unique Architecture
 
-- **Full Digital Governance Platform**: Complete access to all 24 foundation modules (Services Portal, Executive Meetings & Video Suite, High-Security Documents Vault, 15 Executive Office Bearers Roster, Northeast News Hub, Government Welfare Grants & AI Scheme Finder, Manipuri Cultural Heritage, Media Gallery, and Official UPI Donations).
-- **Executive QR Gateway Integration**: Seamless Keyring Access Card, 300 DPI high-resolution printable cards, and instant verification.
-- **Cross-Platform**: Tested and optimized for both **Android** (phones & tablets) and **iOS** (iPhone & iPad).
-- **Native Android Studio Ready**: Fully configured Gradle project that syncs and runs in Android Studio with 1 click.
-- **Offline Resilience & Fast Navigation**: Dedicated top navigation bar (Back, Forward, Refresh, Share, Home), dark theme status bar, and automated retry on network interruptions.
+### 1. 🏠 Executive Home Feed
+- **VIP Digital Keyring Pass**: Interactive membership and executive pass with live verification badge and QR code generator for event entry and identity check-in.
+- **Live Impact Carousel**: Real-time welfare statistics (₹42.5L+ facilitated grants, 12,450+ beneficiaries supported, 15 governing leaders, 100% tax exemption).
+- **8-Matrix Mobile Operations Hub**: Fast 1-tap shortcuts for UPI Donations, AI Grants Finder, 15 Executive Leaders Roster, Manipuri Heritage, Document Vault, Council Meetings, Northeast News Hub, and Health Camps.
+
+### 2. 🤖 AI Scheme & Welfare Grants Finder
+- Interactive grant category selector: **Senior Citizen Welfare**, **Cultural Preservation**, **Youth Sports (Kabaddi)**, **Rural Women Weaving**, and **Mobile Tele-Health**.
+- Real-time search by ministry, scheme name, or keyword.
+- Clear eligibility criteria, grant allocation amounts, and 1-tap application flow.
+
+### 3. 🪕 Manipuri Indigenous Cultural Heritage
+- **Traditional Music & Pena**: Authentic folk ballads (Lai Haraoba Ritual Chant, Khamba Thoibi Ballad, Ancient Kangleipak melodies) with instant video/audio links.
+- **Sacred Dance & Rituals**: Sacred traditions of Umang Lai and classical Manipuri Ras Leela.
+- **Indigenous Cuisine**: Authentic Meitei recipes (Singju, Chak-hao Kheer, Kanghou, and Eromba) with health benefits and culinary heritage.
+
+### 4. 👥 15 Executive Office Bearers Roster & Vault
+- **Complete 15 Leaders Directory**: Full profiles for President Dr. Phuritsabam Birmani, Vice-Chairman K. Ajit Singh, MD Y. Thambal Singha, Secretary M. Bina Babu Singha, Treasurer Ng. Baldev Singha, and all executive council members.
+- **Interactive Profile Modals**: Tap any leader to inspect their background, area of responsibility, and direct email buttons.
+- **High-Security Document Vault**: Instant access to Trust Deed, 80G Approval, 12A Certificate, NITI Aayog Darpan filing, and audited financial statements.
+
+### 5. 💳 Instant High-Conversion UPI Giving Gateway
+- **1-Tap Direct UPI Payment Intent**: Launches user's installed Google Pay, PhonePe, Paytm, BHIM, or Cred app directly with pre-filled foundation VPA (`leimarembifoundation@sbi`).
+- **Quick Preset Chips**: Instant selection for ₹100, ₹500, ₹1,000, ₹2,500, and ₹5,000 or custom amount.
+- **Section 80G Tax Exemption**: Formal receipt details form with donor PAN and name.
+- **Wire Transfer Details**: Full State Bank of India (SBI) account details and IFSC code.
 
 ---
 
@@ -19,116 +41,46 @@ This repository contains the official mobile application codebase for **Leimarem
 
 ```
 LeimarembiFoundation-MobileApplication/
-├── android-native-app/        # Ready-to-run Android Studio project (Capacitor Native Engine)
-│   ├── app/                   # Android app module with manifest, icons, resources
+├── android/                   # React Native & Expo Prebuilt Native Android Project
+│   ├── app/                   # App module with native Kotlin code, manifest, icons
 │   ├── build.gradle           # Root Gradle build configuration
 │   └── gradlew.bat            # Gradle wrapper executable
-├── ios-native-app/            # Ready-to-run iOS Xcode workspace (App.xcworkspace)
-│   └── App/                   # iOS native code, Info.plist, assets
-├── src/                       # React Native application source code
-│   ├── app/                   # Expo Router screens (index.tsx website clone, _layout.tsx)
-│   ├── components/            # Reusable UI components & native cards
-│   ├── constants/             # Design tokens & color scheme
-│   └── hooks/                 # Native device hooks
-├── assets/                    # Official logos, splash screens, and adaptive icons
-├── app.json                   # Expo application configuration (Package: org.leimarembifoundation.mobile)
-└── package.json               # Node.js dependencies & execution scripts
+├── android-native-app/        # Alternative Capacitor Native Android Studio workspace
+├── ios-native-app/            # Native iOS Xcode workspace (App.xcworkspace)
+├── src/
+│   ├── app/
+│   │   ├── index.tsx          # Main Bespoke Native Mobile App (5 Tabs, Modals, UPI Engine)
+│   │   └── _layout.tsx        # Expo Router layout & Safe Area configuration
+│   ├── components/            # Reusable UI cards, icons, and theme primitives
+│   └── constants/             # Design tokens & color system
+├── assets/                    # Foundation logos, splash screens, and adaptive app icons
+├── app.json                   # Application configuration (Package: org.leimarembifoundation.mobile)
+├── package.json               # Node.js dependencies
+└── PUSH_TO_GITHUB.bat         # 1-Click interactive script to upload code to GitHub
 ```
 
 ---
 
 ## 🚀 How to Run in Android Studio
 
-### Step 1: Open the Project in Android Studio
-1. Launch **Android Studio**.
-2. Click **File → Open...** (or select **Open** from the welcome screen).
-3. Browse to and select this folder:
+1. Open **Android Studio**.
+2. Click **File → Open...** and select:
    ```
-   D:\LeimarembiFoundation-MobileApplication\android-native-app
+   D:\LeimarembiFoundation-MobileApplication\android
    ```
-   *(Ensure you select the `android-native-app` folder directly, not the root)*
-4. Click **OK** (choose **This Window**).
-
-### Step 2: Automatic Gradle Sync
-- Android Studio will automatically index the project and sync dependencies via Gradle.
-- Once sync finishes, the top run configuration automatically selects **`app`** (instead of `Add Config...`).
-
-### Step 3: Run on Emulator or Physical Device
-1. Select your target device (e.g. **Pixel 9 Pro API 37.1** or your USB-connected physical phone).
-2. Click the green **Run (Play)** button (or press `Shift + F10`).
-3. The app compiles and installs directly onto the device.
+3. Let Gradle complete sync automatically.
+4. Select your emulator (e.g. **Pixel 9 Pro API 37.1**) or connected USB device.
+5. Click **Run (Play)** or press `Shift + F10`.
 
 ---
 
-## ⚡ How to Run via React Native / Expo
+## 🚀 How to Push to GitHub
 
-If you prefer using Expo CLI for rapid development:
-
-```powershell
-# 1. Navigate to the repository
-cd D:\LeimarembiFoundation-MobileApplication
-
-# 2. Start the Metro bundler
-npm start
-
-# 3. Choose your platform:
-#    Press 'a' -> Open on connected Android device / emulator
-#    Press 'i' -> Open on iOS simulator (macOS required)
-#    Press 'w' -> Open web preview
-```
-
-### Pre-export Bundles (Verified)
-The mobile bundles have been verified with 0 errors:
-- **Android**: `_expo/static/js/android/entry-*.js` (2.6 MB)
-- **iOS**: `_expo/static/js/ios/entry-*.js` (2.5 MB)
-
----
-
-## 🛠️ Building Standalone APK / AAB for Android
-
-### Build Debug APK (CLI):
-```powershell
-cd D:\LeimarembiFoundation-MobileApplication\android-native-app
-.\gradlew.bat assembleDebug
-```
-The output APK is generated at:
-`android-native-app/app/build/outputs/apk/debug/app-debug.apk`
-
-### Install onto Connected Device:
-```powershell
-adb install -r android-native-app/app/build/outputs/apk/debug/app-debug.apk
-```
-
----
-
-## 🍎 Building for iOS (Xcode)
-
-1. Open `ios-native-app/App.xcworkspace` in **Xcode** on macOS.
-2. Select your development team under **Signing & Capabilities**.
-3. Select any iPhone simulator or connected iOS device.
-4. Press `Cmd + R` to build and run.
-
----
-
-## 🔗 Connecting to a New GitHub Repository
-
-To push this dedicated mobile codebase to a new remote repository:
-
+Double-click **`PUSH_TO_GITHUB.bat`** on your Desktop or run:
 ```powershell
 cd D:\LeimarembiFoundation-MobileApplication
-
-# Initialize git (if not already initialized)
-git init
-git add .
-git commit -m "feat: initial commit for Leimarembi Foundation Mobile Application"
-
-# Link to your new remote repository
-git remote add origin https://github.com/YOUR_USERNAME/LeimarembiFoundation-MobileApplication.git
-git branch -M main
 git push -u origin main
 ```
-
----
-
-## 🛡️ Isolation Note
-This repository is completely independent from the production website repository. Any updates, styling adjustments, or mobile features should be committed directly to this repository. The production website codebase remains untouched.
+Authorize in your browser when prompted, and your GitHub repository at:
+👉 **https://github.com/Aryamnsls/LeimarembiFoundation-MobileApplication**
+will immediately update with all mobile files!
