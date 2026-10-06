@@ -10,7 +10,16 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { WebView } from 'react-native-webview';
+import * as WebBrowser from 'expo-web-browser';
+
+// Safely resolve native WebView if present in binary, fallback to in-app browser
+let NativeWebView: any = null;
+try {
+  const rnw = require('react-native-webview');
+  NativeWebView = rnw.WebView || rnw.default;
+} catch (err) {
+  NativeWebView = null;
+}
 
 const PRODUCTION_URL = 'https://leimarembifoundation.org';
 
@@ -45,11 +54,18 @@ const INJECTED_MOBILE_VIEWPORT = `
 
 export default function MobileAppScreen() {
   const insets = useSafeAreaInsets();
-  const webViewRef = useRef<WebView>(null);
+  const webViewRef = useRef<any>(null);
   const [canGoBack, setCanGoBack] = useState(false);
   const [loading, setLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
+  // Fallback if native RNCWebViewModule is not linked in current APK
+  useEffect(() => {
+    if (!NativeWebView) {
+      WebBrowser.openBrowserAsync(PRODUCTION_URL);
+    }
+  }, []);
 
   // Handle hardware back button on Android to navigate website history
   useEffect(() => {
@@ -73,6 +89,28 @@ export default function MobileAppScreen() {
     webViewRef.current?.reload();
   }, []);
 
+  if (!NativeWebView) {
+    return (
+      <View style={styles.root}>
+        <StatusBar barStyle="dark-content" backgroundColor="#F8FAFC" translucent={false} />
+        <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
+          <View style={styles.loadingContainer}>
+            <Text style={{ fontSize: 40, marginBottom: 12 }}>🏛️</Text>
+            <Text style={styles.errorTitle}>Leimarembi Foundation</Text>
+            <Text style={styles.errorSubtitle}>Opening official mobile portal...</Text>
+            <TouchableOpacity
+              style={styles.retryBtn}
+              onPress={() => WebBrowser.openBrowserAsync(PRODUCTION_URL)}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.retryBtnText}>Open Mobile Site</Text>
+            </TouchableOpacity>
+          </View>
+        </SafeAreaView>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.root}>
       <StatusBar
@@ -81,7 +119,7 @@ export default function MobileAppScreen() {
         translucent={false}
       />
       <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
-        <WebView
+        <NativeWebView
           ref={webViewRef}
           source={{ uri: PRODUCTION_URL }}
           style={styles.webView}
@@ -99,7 +137,7 @@ export default function MobileAppScreen() {
           mediaPlaybackRequiresUserAction={false}
           pullToRefreshEnabled={true}
           textZoom={100}
-          onNavigationStateChange={(navState) => {
+          onNavigationStateChange={(navState: any) => {
             setCanGoBack(navState.canGoBack);
           }}
           onLoadStart={() => {
@@ -108,7 +146,7 @@ export default function MobileAppScreen() {
           onLoadEnd={() => {
             setLoading(false);
           }}
-          onError={(syntheticEvent) => {
+          onError={(syntheticEvent: any) => {
             const { nativeEvent } = syntheticEvent;
             setLoading(false);
             setHasError(true);
