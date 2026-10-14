@@ -2,7 +2,7 @@
 title Install Mobile App to Emulator
 color 0A
 set ADB="%LOCALAPPDATA%\Android\Sdk\platform-tools\adb.exe"
-set APK="D:\LF\mobile\android\app\build\outputs\apk\debug\app-debug.apk"
+set APK="D:\LeimarembiFoundation-MobileApplication\android\app\build\outputs\apk\debug\app-debug.apk"
 
 echo ======================================================================
 echo   INSTALLING LEIMAREMBI FOUNDATION TO ANDROID EMULATOR
@@ -11,7 +11,7 @@ echo.
 echo Checking for active emulator...
 %ADB% devices
 echo.
-echo Installing APK to your running emulator...
+echo Installing updated APK to your running emulator...
 %ADB% install -r %APK%
 echo.
 if %ERRORLEVEL% EQU 0 (

@@ -87,6 +87,12 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
+    externalNativeBuild {
+        cmake {
+            buildStagingDirectory = file("D:/b/cxx")
+        }
+    }
+
     namespace 'com.anonymous.mobile'
     defaultConfig {
         applicationId 'com.anonymous.mobile'
