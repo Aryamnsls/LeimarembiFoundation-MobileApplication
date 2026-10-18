@@ -89,7 +89,11 @@ android {
 
     externalNativeBuild {
         cmake {
-            buildStagingDirectory = file("D:/b/cxx")
+            if (findProperty('android.cmake.stagingDir')) {
+                buildStagingDirectory = file(findProperty('android.cmake.stagingDir'))
+            } else if (org.gradle.internal.os.OperatingSystem.current().isWindows() && file("D:/b/cxx").exists()) {
+                buildStagingDirectory = file("D:/b/cxx")
+            }
         }
     }
 

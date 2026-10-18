@@ -11,77 +11,23 @@
  */
 
 import { Platform } from 'react-native';
+import * as SQLite from 'expo-sqlite';
 
-export interface UserRecord {
-  id: string;
-  name: string;
-  email: string;
-  phone?: string;
-  address?: string;
-  blood_group?: string;
-  is_senior_citizen?: number;
-  family_members_count?: number;
-  membership_no?: string;
-  role?: string;
-  designation?: string;
-  password_hash?: string;
-  auth_provider?: string;
-  created_at?: string;
-  updated_at?: string;
-}
+import {
+  UserRecord,
+  CachedMember,
+  DonationRecord,
+  ActivityLog,
+  OFFICIAL_MEMBERS_SEED,
+} from './database.types';
 
-export interface CachedMember {
-  id: string;
-  name: string;
-  designation: string;
-  role: string;
-  phone: string;
-  email: string;
-  blood_group: string;
-  is_senior_citizen: number;
-  category: string;
-  order_index: number;
-}
-
-export interface DonationRecord {
-  id: string;
-  donor_name: string;
-  donor_phone?: string;
-  donor_email?: string;
-  amount: number;
-  purpose?: string;
-  payment_mode?: string;
-  reference_id?: string;
-  receipt_number?: string;
-  created_at?: string;
-  synced?: number;
-}
-
-export interface ActivityLog {
-  id?: number;
-  type: string;
-  user_identifier?: string;
-  details: string;
-  timestamp: string;
-}
-
-const OFFICIAL_MEMBERS_SEED: CachedMember[] = [
-  { id: 'LF-EXEC-001', name: 'M. Tombi Babu Singha', designation: 'President', role: 'ADMIN', phone: '9864012345', email: 'tombi.singha@leimarembifoundation.org', blood_group: 'O+', is_senior_citizen: 1, category: 'Executive', order_index: 1 },
-  { id: 'LF-EXEC-002', name: 'K. Khogendra Singha', designation: 'Vice-Chairman', role: 'ADMIN', phone: '9864023456', email: 'khogendra.singha@leimarembifoundation.org', blood_group: 'B+', is_senior_citizen: 1, category: 'Executive', order_index: 2 },
-  { id: 'LF-EXEC-003', name: 'L. Bira Babu Singha', designation: 'Managing Director', role: 'ADMIN', phone: '9864034567', email: 'birababu.singha@leimarembifoundation.org', blood_group: 'A+', is_senior_citizen: 1, category: 'Executive', order_index: 3 },
-  { id: 'LF-EXEC-004', name: 'M. Bina Babu Singha', designation: 'Super Administrator & Founder', role: 'SUPER_ADMIN', phone: '7637087931', email: 'binababu.singha@yahoo.com', blood_group: 'AB+', is_senior_citizen: 1, category: 'Executive', order_index: 4 },
-  { id: 'LF-EXEC-005', name: 'M. Nilamani Singha', designation: 'General Secretary', role: 'ADMIN', phone: '9864056789', email: 'nilamani.singha@leimarembifoundation.org', blood_group: 'O+', is_senior_citizen: 0, category: 'Executive', order_index: 5 },
-  { id: 'LF-EXEC-006', name: 'M. Babu Singha', designation: 'Joint Secretary', role: 'ADMIN', phone: '9864067890', email: 'babu.singha@leimarembifoundation.org', blood_group: 'B+', is_senior_citizen: 0, category: 'Executive', order_index: 6 },
-  { id: 'LF-EXEC-007', name: 'K. Brojendro Singha', designation: 'Treasurer', role: 'ADMIN', phone: '9864078901', email: 'brojendro.singha@leimarembifoundation.org', blood_group: 'A+', is_senior_citizen: 0, category: 'Executive', order_index: 7 },
-  { id: 'LF-EXEC-008', name: 'M. Mangi Babu Singha', designation: 'Executive Member', role: 'MEMBER', phone: '9864089012', email: 'mangi.singha@leimarembifoundation.org', blood_group: 'AB+', is_senior_citizen: 1, category: 'Committee', order_index: 8 },
-  { id: 'LF-EXEC-009', name: 'K. Mani Singha', designation: 'Executive Member', role: 'MEMBER', phone: '9864090123', email: 'mani.singha@leimarembifoundation.org', blood_group: 'O-', is_senior_citizen: 1, category: 'Committee', order_index: 9 },
-  { id: 'LF-EXEC-010', name: 'K. Sarat Singha', designation: 'Executive Member', role: 'MEMBER', phone: '9864101234', email: 'sarat.singha@leimarembifoundation.org', blood_group: 'B-', is_senior_citizen: 0, category: 'Committee', order_index: 10 },
-  { id: 'LF-EXEC-011', name: 'L. Mohan Singha', designation: 'Executive Member', role: 'MEMBER', phone: '9864112345', email: 'mohan.singha@leimarembifoundation.org', blood_group: 'A-', is_senior_citizen: 0, category: 'Committee', order_index: 11 },
-  { id: 'LF-EXEC-012', name: 'L. Ibohal Singha', designation: 'Executive Member', role: 'MEMBER', phone: '9864123456', email: 'ibohal.singha@leimarembifoundation.org', blood_group: 'O+', is_senior_citizen: 1, category: 'Committee', order_index: 12 },
-  { id: 'LF-EXEC-013', name: 'S. Goura Singha', designation: 'Executive Member', role: 'MEMBER', phone: '9864134567', email: 'goura.singha@leimarembifoundation.org', blood_group: 'B+', is_senior_citizen: 0, category: 'Committee', order_index: 13 },
-  { id: 'LF-EXEC-014', name: 'M. Brajamani Singha', designation: 'Executive Member', role: 'MEMBER', phone: '9864145678', email: 'brajamani.singha@leimarembifoundation.org', blood_group: 'AB-', is_senior_citizen: 1, category: 'Committee', order_index: 14 },
-  { id: 'LF-SA-001', name: 'Aryaman Singha', designation: 'IT Director & Super Admin', role: 'SUPER_ADMIN', phone: '7099659804', email: 'aryamansingha60@gmail.com', blood_group: 'A+', is_senior_citizen: 0, category: 'SuperAdmin', order_index: 15 },
-];
+export {
+  UserRecord,
+  CachedMember,
+  DonationRecord,
+  ActivityLog,
+  OFFICIAL_MEMBERS_SEED,
+};
 
 let dbInstance: any = null;
 
@@ -90,7 +36,6 @@ function getDatabase() {
   if (Platform.OS === 'web') return null;
 
   try {
-    const SQLite = require('expo-sqlite');
     if (SQLite && typeof SQLite.openDatabaseSync === 'function') {
       dbInstance = SQLite.openDatabaseSync('leimarembi_foundation.db');
       return dbInstance;
@@ -260,7 +205,7 @@ export function saveUser(user: Partial<UserRecord>): boolean {
 }
 
 /**
- * Get user by email or phone number
+ * Find user by email or phone
  */
 export function getUser(credential: string): UserRecord | null {
   const db = getDatabase();
@@ -271,8 +216,8 @@ export function getUser(credential: string): UserRecord | null {
     const cleanPhone = credential.replace(/\D/g, '');
 
     const result = db.getFirstSync(
-      `SELECT * FROM users WHERE LOWER(email) = ? OR (phone != '' AND REPLACE(REPLACE(phone, ' ', ''), '-', '') LIKE ?) LIMIT 1;`,
-      [clean, `%${cleanPhone}%`]
+      'SELECT * FROM users WHERE LOWER(email) = ? OR (phone != \'\' AND phone = ?) LIMIT 1;',
+      [clean, cleanPhone]
     ) as UserRecord | null;
 
     return result || null;
@@ -283,14 +228,14 @@ export function getUser(credential: string): UserRecord | null {
 }
 
 /**
- * Get all users stored in SQLite
+ * Get all registered offline users
  */
 export function getAllUsers(): UserRecord[] {
   const db = getDatabase();
   if (!db) return [];
 
   try {
-    return (db.getAllSync('SELECT * FROM users ORDER BY updated_at DESC;') as UserRecord[]) || [];
+    return (db.getAllSync('SELECT * FROM users ORDER BY created_at DESC;') as UserRecord[]) || [];
   } catch (err) {
     console.error('[SQLite] Error getting all users:', err);
     return [];
@@ -299,8 +244,10 @@ export function getAllUsers(): UserRecord[] {
 
 /**
  * Save an offline donation receipt
+ * Enforces data integrity: never mark synced unless confirmed by backend signal
  */
 export function saveDonation(donation: DonationRecord): boolean {
+  if (!Number.isFinite(donation.amount) || donation.amount < 0) return false;
   const db = getDatabase();
   if (!db) return false;
 
@@ -308,6 +255,7 @@ export function saveDonation(donation: DonationRecord): boolean {
     const id = donation.id || `don_${Date.now()}`;
     const receipt = donation.receipt_number || `LF-REC-${Date.now().toString().slice(-6)}`;
     const now = donation.created_at || new Date().toISOString();
+    const isSynced = donation.synced === 1 ? 1 : 0;
 
     db.runSync(
       `INSERT OR REPLACE INTO donations (
@@ -325,11 +273,11 @@ export function saveDonation(donation: DonationRecord): boolean {
         donation.reference_id || '',
         receipt,
         now,
-        donation.synced ? 1 : 0
+        isSynced
       ]
     );
 
-    logActivity('DONATION_SAVED', donation.donor_email || 'DONOR', `Donation of ₹${donation.amount} saved (${receipt})`);
+    logActivity('DONATION_SAVED', donation.donor_email || 'DONOR', `Donation of ₹${donation.amount} saved (${receipt}, synced: ${isSynced})`);
     return true;
   } catch (err) {
     console.error('[SQLite] Error saving donation:', err);
@@ -362,7 +310,7 @@ export function getCachedMembers(): CachedMember[] {
   try {
     const list = db.getAllSync('SELECT * FROM cached_members ORDER BY order_index ASC;') as CachedMember[];
     return list && list.length > 0 ? list : OFFICIAL_MEMBERS_SEED;
-  } catch (err) {
+  } catch {
     return OFFICIAL_MEMBERS_SEED;
   }
 }
@@ -377,7 +325,7 @@ export function setSetting(key: string, value: string): boolean {
   try {
     db.runSync('INSERT OR REPLACE INTO app_settings (key, value) VALUES (?, ?);', [key, value]);
     return true;
-  } catch (err) {
+  } catch {
     return false;
   }
 }
@@ -389,7 +337,7 @@ export function getSetting(key: string, defaultValue: string = ''): string {
   try {
     const result = db.getFirstSync('SELECT value FROM app_settings WHERE key = ?;', [key]) as { value: string } | null;
     return result ? result.value : defaultValue;
-  } catch (err) {
+  } catch {
     return defaultValue;
   }
 }
@@ -407,7 +355,7 @@ export function logActivity(type: string, userIdentifier: string, details: strin
       'INSERT INTO activity_logs (type, user_identifier, details, timestamp) VALUES (?, ?, ?, ?);',
       [type, userIdentifier, details, now]
     );
-  } catch (err) {
+  } catch {
     // Fail silently for logger
   }
 }
@@ -418,7 +366,7 @@ export function getActivityLogs(limit: number = 50): ActivityLog[] {
 
   try {
     return (db.getAllSync('SELECT * FROM activity_logs ORDER BY id DESC LIMIT ?;', [limit]) as ActivityLog[]) || [];
-  } catch (err) {
+  } catch {
     return [];
   }
 }
